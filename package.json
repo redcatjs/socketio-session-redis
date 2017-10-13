@@ -4,6 +4,9 @@
   "description": "Redis session manager for socket.io and express",
   "main": "dist/index.js",
   "scripts": {
+    "dev": "node -e 'const { spawn, execSync } = require(`child_process`); execSync(`npm run build`,{stdio:`inherit`}); spawn(`npm`,[`run`, `watch-babel`],{stdio:`inherit`}); spawn(`npm`,[`run`,`watch-nodemon`],{stdio:`inherit`});'",
+    "watch-babel": "node_modules/babel-cli/bin/babel.js src --out-dir dist --source-maps inline --copy-files --watch --skip-initial-build",
+    "watch-nodemon": "NODE_ENV=development ./node_modules/nodemon/bin/nodemon.js dist/index.js --watch dist -e js,html,graphql",
     "build": "babel src --out-dir dist --source-maps inline"
   },
   "repository": {
@@ -39,12 +42,14 @@
   },
   "dependencies": {
     "babel-plugin-inline-import": "^2.0.6",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "cookies-js": "^1.2.3",
+    "nodemon": "^1.12.1",
+    "redis": "^2.7.1",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
-    "body-parser": "^1.17.2",
-    "cookies-js": "^1.2.3",
-    "cookie-parser": "^1.4.3",
-    "socket.io-cookie-parser": "^1.0.0",
-    "redis": "^2.7.1"
+    "socket.io-cookie-parser": "^1.0.0"
   }
 }
