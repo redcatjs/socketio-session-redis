@@ -1,5 +1,5 @@
 import Cookies from 'cookies-js'
-function ClientSessionReady(){
+function ClientSessionReady(socket){
 	return new Promise((resolve, reject)=>{
 		socket.on('connect',()=>{
 			socket.emit('openSession', null, answer => {
