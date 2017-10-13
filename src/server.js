@@ -56,6 +56,9 @@ export default class SessionServer {
 				reject(...args);
 			};
 		});
+		this.ready.catch(function () {
+			 //console.log('waiting openSession timeout');
+		})
 	}
 	open(token, userCallback){
 		if(!token && this.options.token){
