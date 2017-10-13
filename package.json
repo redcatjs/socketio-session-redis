@@ -2,7 +2,7 @@
   "name": "socketio-session-redis",
   "version": "1.0.0",
   "description": "Redis session manager for socket.io and express",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "babel src --out-dir dist --source-maps inline"
   },
