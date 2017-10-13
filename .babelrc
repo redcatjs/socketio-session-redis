@@ -1,0 +1,20 @@
+{
+	"plugins": [
+		"transform-class-properties",
+		"transform-runtime",
+		"transform-export-extensions",
+		"babel-plugin-inline-import",
+		["module-resolver", {
+			"root": ["./app"],
+			"alias": {
+				"app": "./app",
+			}
+		}]
+	],
+	"presets": [
+		"stage-0",
+		"es2015",
+		"env",
+		"react",
+	]
+}
