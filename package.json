@@ -1,6 +1,6 @@
 {
   "name": "socketio-session-redis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Redis session manager for socket.io and express",
   "main": "dist/index.js",
   "scripts": {
