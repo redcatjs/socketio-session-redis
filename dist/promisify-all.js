@@ -1,0 +1,15 @@
+'use strict';
+
+var _bluebird = require('bluebird');
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
+var _redis = require('redis');
+
+var _redis2 = _interopRequireDefault(_redis);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_bluebird2.default.promisifyAll(_redis2.default.RedisClient.prototype);
+_bluebird2.default.promisifyAll(_redis2.default.Multi.prototype);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9wcm9taXNpZnktYWxsLmpzIl0sIm5hbWVzIjpbInByb21pc2lmeUFsbCIsIlJlZGlzQ2xpZW50IiwicHJvdG90eXBlIiwiTXVsdGkiXSwibWFwcGluZ3MiOiI7O0FBQUE7Ozs7QUFFQTs7Ozs7O0FBRUEsbUJBQVNBLFlBQVQsQ0FBc0IsZ0JBQU1DLFdBQU4sQ0FBa0JDLFNBQXhDO0FBQ0EsbUJBQVNGLFlBQVQsQ0FBc0IsZ0JBQU1HLEtBQU4sQ0FBWUQsU0FBbEMiLCJmaWxlIjoicHJvbWlzaWZ5LWFsbC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBibHVlYmlyZCBmcm9tICdibHVlYmlyZCdcblxuaW1wb3J0IHJlZGlzIGZyb20gJ3JlZGlzJ1xuXG5ibHVlYmlyZC5wcm9taXNpZnlBbGwocmVkaXMuUmVkaXNDbGllbnQucHJvdG90eXBlKTtcbmJsdWViaXJkLnByb21pc2lmeUFsbChyZWRpcy5NdWx0aS5wcm90b3R5cGUpO1xuIl19
