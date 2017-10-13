@@ -1,8 +1,7 @@
 import redis from 'redis'
 import crypto from 'crypto'
 
-
-
+import './promisify-all'
 
 export default class SessionServer {	
 	constructor(
@@ -34,11 +33,11 @@ export default class SessionServer {
 		
 	}
 	initRedis(){
-		this.redisClient = redis.createClient({
+		this.redis = redis.createClient({
 			host:this.options.redisHost,
 			port:this.options.redisPort,
 		});
-		this.redisClient.select(this.options.redisIndex);
+		this.redis.select(this.options.redisIndex);
 	}
 	start(){
 		this.ready = new Promise((resolve, reject) => {
@@ -96,7 +95,7 @@ export default class SessionServer {
 				callback = null;
 			}
 			
-			const multi = transaction || this.redisClient.multi();
+			const multi = transaction || this.redis.multi();
 			Object.keys(k).forEach((key)=>{
 				const val = v[key];
 				multi.hset(this.options.sessionKey+':'+this.token, k, JSON.stringify(val));
@@ -115,7 +114,7 @@ export default class SessionServer {
 				}
 			}
 			else{
-				this.redisClient.hset(redisKey, k, val, callback);
+				this.redis.hset(redisKey, k, val, callback);
 			}
 			this.data[k] = v;
 		}
@@ -124,21 +123,21 @@ export default class SessionServer {
 		return this.data[k];
 	}
 	exists(token, callback){
-		this.redisClient.sismember(this.options.sessionKey,token,(err,exists)=>{
+		this.redis.sismember(this.options.sessionKey,token,(err,exists)=>{
 			callback(err,exists);
 		});
 	}
 	
 	registerNewToken(callback){
 		const token = this.generateToken();
-		const transaction = this.redisClient.multi();
+		const transaction = this.redis.multi();
 		transaction.sadd('session', token);
 		this.storeSession(token, callback, transaction);
 	}
 	storeSession(token, callback, transaction){
 		
 		if(!transaction){
-			transaction = this.redisClient.multi();
+			transaction = this.redis.multi();
 		}
 		
 		const data = this.data;
@@ -160,22 +159,26 @@ export default class SessionServer {
 	async login(data){
 		const id = data.user_id;
 		const redisUserKey = this.options.userKey+':'+id;
-		const transaction = this.redisClient.multi();
+		const transaction = this.redis.multi();
 		
-		return await this.redisClient.getAsync(redisUserKey, async (token)=>{
+		return await this.redis.getAsync(redisUserKey, async (token)=>{
 			
 			if(!token){
 				transaction.set(redisUserKey, this.token);
 				this.setData(data, transaction);
 			}
 			else{
-				//TODO Merge current session with allready existing session for user
-				//...
+				
+				let userSession = await this.redis.hgetAllAsync(redisUserKey, (err, results) => results);
+				console.log(userSession);
+				
 				
 			}
 			return await transaction.execAsync((err, results)=>{
 				return results;
 			});
+			
+			
 			
 		});
 		
